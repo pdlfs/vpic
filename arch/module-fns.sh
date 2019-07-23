@@ -17,7 +17,7 @@
 
 #
 # input:
-#  - we assume the the of loaded modules is in ${LOADEDMODULES}
+#  - we assume the set of loaded modules is in ${LOADEDMODULES}
 # output variables:
 #  - VCOM: currently loaded compiler (GNU, INT, CCE, PGI)
 #  - VMPI: currently loaded MPI (CMPI, IMPI, OMPI)
