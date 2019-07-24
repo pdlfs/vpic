@@ -8,6 +8,7 @@
  *
  */
 
+#include <unistd.h>   /* for getcwd()/chdir() prototypes */
 #include "vpic/vpic.h"
 
 // The simulation variable is set up this way so both the checkpt
@@ -63,6 +64,12 @@ void checkpt(const char* fbase, int tag)
  */
 int main(int argc, char** argv)
 {
+    const char *cwd;
+    if ((cwd = getenv("VPIC_current_working_dir")) != NULL &&
+        chdir(cwd) < 0) {
+        perror("VPIC_current_working_dir: chdir");
+        exit(1);
+    }
 
     // Initialize underlying threads and services
     boot_services( &argc, &argv );
