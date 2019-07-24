@@ -17,7 +17,7 @@ vpic_simulation::inject_particle( species_t * sp,
                                   double x,  double y,  double z,
                                   double ux, double uy, double uz,
                                   double w,  double age,
-                                  int update_rhob ) {
+                                  int update_rhob, int64_t tag ) {
   int ix, iy, iz;
 
   // Check input parameters
@@ -82,6 +82,7 @@ vpic_simulation::inject_particle( species_t * sp,
   p->uy = (float)uy;
   p->uz = (float)uz;
   p->w  = w;
+  p->tag = tag;
 
   if( update_rhob ) accumulate_rhob( field_array->f, p, grid, -sp->q );
 

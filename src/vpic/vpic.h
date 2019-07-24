@@ -526,7 +526,7 @@ private:
   inject_particle( species_t * sp,
                    double x,  double y,  double z,
                    double ux, double uy, double uz,
-                   double w,  double age = 0, int update_rhob = 1 );
+                   double w,  double age, int update_rhob, int64_t tag = 0 );
 
   // Inject particle raw is for power users!
   // No nannyism _at_ _all_:
