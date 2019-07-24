@@ -85,7 +85,7 @@ vpic_simulation::dump_species( const char *fname ) {
 
   if( rank() ) return;
   if( !fname ) ERROR(( "Invalid file name" ));
-  MESSAGE(( "Dumping species to \"%s\"", fname ));
+  VMESSAGE(( "Dumping species to \"%s\"", fname ));
   FileIOStatus status = fileIO.open(fname, io_write);
   if( status==fail ) ERROR(( "Could not open \"%s\".", fname ));
   LIST_FOR_EACH( sp, species_list )
@@ -99,7 +99,7 @@ vpic_simulation::dump_materials( const char *fname ) {
   material_t *m;
   if( rank() ) return;
   if( !fname ) ERROR(( "Invalid file name" ));
-  MESSAGE(( "Dumping materials to \"%s\"", fname ));
+  VMESSAGE(( "Dumping materials to \"%s\"", fname ));
   FileIOStatus status = fileIO.open(fname, io_write);
   if( status==fail ) ERROR(( "Could not open \"%s\"", fname ));
   LIST_FOR_EACH( m, material_list )
@@ -142,7 +142,7 @@ vpic_simulation::dump_grid( const char *fbase ) {
   int dim[4];
 
   if( !fbase ) ERROR(( "Invalid filename" ));
-  if( rank()==0 ) MESSAGE(( "Dumping grid to \"%s\"", fbase ));
+  if( rank()==0 ) VMESSAGE(( "Dumping grid to \"%s\"", fbase ));
 
   sprintf( fname, "%s.%i", fbase, rank() );
   FileIOStatus status = fileIO.open(fname, io_write);
@@ -275,7 +275,7 @@ vpic_simulation::dump_particles( const char *sp_name,
   if( !p_buf ) MALLOC_ALIGNED( p_buf, PBUF_SIZE, 128 );
 
   if( rank()==0 )
-    MESSAGE(("Dumping \"%s\" particles to \"%s\"",sp->name,fbase));
+    VMESSAGE(("Dumping \"%s\" particles to \"%s\"",sp->name,fbase));
 
   if( ftag ) sprintf( fname, "%s.%li.%i", fbase, (long)step(), rank() );
   else       sprintf( fname, "%s.%i", fbase, rank() );

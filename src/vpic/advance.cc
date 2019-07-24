@@ -24,7 +24,7 @@ int vpic_simulation::advance(void) {
 
   LIST_FOR_EACH( sp, species_list )
     if( (sp->sort_interval>0) && ((step() % sp->sort_interval)==0) ) {
-      if( rank()==0 ) MESSAGE(( "Performance sorting \"%s\"", sp->name ));
+      if( rank()==0 ) VMESSAGE(( "Performance sorting \"%s\"", sp->name ));
       TIC sort_p( sp ); TOC( sort_p, 1 );
     } 
 
@@ -139,7 +139,7 @@ int vpic_simulation::advance(void) {
   // Divergence clean e
 
   if( (clean_div_e_interval>0) && ((step() % clean_div_e_interval)==0) ) {
-    if( rank()==0 ) MESSAGE(( "Divergence cleaning electric field" ));
+    if( rank()==0 ) VMESSAGE(( "Divergence cleaning electric field" ));
 
     TIC FAK->clear_rhof( field_array ); TOC( clear_rhof,1 );
     if( species_list ) TIC LIST_FOR_EACH( sp, species_list ) accumulate_rho_p( field_array, sp ); TOC( accumulate_rho_p, species_list->id );
@@ -149,7 +149,7 @@ int vpic_simulation::advance(void) {
       TIC FAK->compute_div_e_err( field_array ); TOC( compute_div_e_err, 1 );
       if( round==0 || round==num_div_e_round-1 ) {
         TIC err = FAK->compute_rms_div_e_err( field_array ); TOC( compute_rms_div_e_err, 1 );
-        if( rank()==0 ) MESSAGE(( "%s rms error = %e (charge/volume)", round==0 ? "Initial" : "Cleaned", err ));
+        if( rank()==0 ) VMESSAGE(( "%s rms error = %e (charge/volume)", round==0 ? "Initial" : "Cleaned", err ));
       }
       TIC FAK->clean_div_e( field_array ); TOC( clean_div_e, 1 );
     }
@@ -158,13 +158,13 @@ int vpic_simulation::advance(void) {
   // Divergence clean b
 
   if( (clean_div_b_interval>0) && ((step() % clean_div_b_interval)==0) ) {
-    if( rank()==0 ) MESSAGE(( "Divergence cleaning magnetic field" ));
+    if( rank()==0 ) VMESSAGE(( "Divergence cleaning magnetic field" ));
 
     for( int round=0; round<num_div_b_round; round++ ) {
       TIC FAK->compute_div_b_err( field_array ); TOC( compute_div_b_err, 1 );
       if( round==0 || round==num_div_b_round-1 ) {
         TIC err = FAK->compute_rms_div_b_err( field_array ); TOC( compute_rms_div_b_err, 1 );
-        if( rank()==0 ) MESSAGE(( "%s rms error = %e (charge/volume)", round==0 ? "Initial" : "Cleaned", err ));
+        if( rank()==0 ) VMESSAGE(( "%s rms error = %e (charge/volume)", round==0 ? "Initial" : "Cleaned", err ));
       }
       TIC FAK->clean_div_b( field_array ); TOC( clean_div_b, 1 );
     }
@@ -173,9 +173,9 @@ int vpic_simulation::advance(void) {
   // Synchronize the shared faces
 
   if( (sync_shared_interval>0) && ((step() % sync_shared_interval)==0) ) {
-    if( rank()==0 ) MESSAGE(( "Synchronizing shared tang e, norm b, rho_b" ));
+    if( rank()==0 ) VMESSAGE(( "Synchronizing shared tang e, norm b, rho_b" ));
     TIC err = FAK->synchronize_tang_e_norm_b( field_array ); TOC( synchronize_tang_e_norm_b, 1 );
-    if( rank()==0 ) MESSAGE(( "Domain desynchronization error = %e (arb units)", err ));
+    if( rank()==0 ) VMESSAGE(( "Domain desynchronization error = %e (arb units)", err ));
   }
 
   // Fields are updated ... load the interpolator for next time step and
@@ -189,7 +189,7 @@ int vpic_simulation::advance(void) {
   // Print out status
 
   if( (status_interval>0) && ((step() % status_interval)==0) ) {
-    if( rank()==0 ) MESSAGE(( "Completed step %i of %i", step(), num_step ));
+    if( rank()==0 ) VMESSAGE(( "Completed step %i of %i", step(), num_step ));
     update_profile( rank()==0 );
   }
 

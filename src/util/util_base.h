@@ -245,6 +245,15 @@ typedef struct collective collective_t;
 //
 // Note: Error messages are abortive but MESSAGE and WARNING are not
 
+#ifndef VERBOSE_MESSAGES
+#define VERBOSE_MESSAGES 0   /* 0 => makes vpic less chatty */
+#endif
+#if (VERBOSE_MESSAGES == 1)
+#define VMESSAGE(args) MESSAGE(args)
+#else
+#define VMESSAGE(args) /*nothing*/
+#endif
+
 #define _LOG_HDR __FILE__ "(" EXPAND_AND_STRINGIFY(__LINE__) ")"
 
 #define CHECKPOINT() log_printf( _LOG_HDR"[%i]: Checkpoint\n", world_rank )
