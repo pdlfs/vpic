@@ -64,6 +64,12 @@ vpic_simulation::user_particle_collisions( void )
     }                                                  \
   } while(0)
 
+#if (defined(VERBOSE_MESSAGES) && (VERBOSE_MESSAGES > 0))
+#define sim_vlog(x) sim_log(x)
+#else
+#define sim_vlog(x) /*nothing, be less verbose */
+#endif
+
 //-----------------------------------------------------------------------------
 
 // These macros provide support for setting materials, boundary
