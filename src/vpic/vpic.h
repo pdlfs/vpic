@@ -526,7 +526,8 @@ private:
   inject_particle( species_t * sp,
                    double x,  double y,  double z,
                    double ux, double uy, double uz,
-                   double w,  double age, int update_rhob, int64_t tag = 0 );
+                   double w,  double age = 0, int update_rhob = 1,
+                   int64_t tag = 0 );
 
   // Inject particle raw is for power users!
   // No nannyism _at_ _all_:
@@ -545,7 +546,9 @@ private:
     particle_t * RESTRICT p = sp->p + (sp->np++);
     p->dx = dx; p->dy = dy; p->dz = dz; p->i = i;
     p->ux = ux; p->uy = uy; p->uz = uz; p->w = w;
+#ifdef ENABLE_PARTICLE_TAG
     p->tag = tag;
+#endif
   }
 
   // This variant does a raw inject and moves the particles
@@ -560,7 +563,9 @@ private:
     particle_mover_t * RESTRICT pm = sp->pm + sp->nm;
     p->dx = dx; p->dy = dy; p->dz = dz; p->i = i;
     p->ux = ux; p->uy = uy; p->uz = uz; p->w = w;
+#ifdef ENABLE_PARTICLE_TAG
     p->tag = tag;
+#endif
     pm->dispx = dispx; pm->dispy = dispy; pm->dispz = dispz; pm->i = sp->np-1;
     if( update_rhob ) accumulate_rhob( field_array->f, p, grid, -sp->q );
     sp->nm += move_p( sp->p, pm, accumulator_array->a, grid, sp->q );

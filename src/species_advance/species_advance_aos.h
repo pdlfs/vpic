@@ -29,7 +29,9 @@ typedef struct particle {
   /**/              // has a stricter limit on this (2^26).
   float ux, uy, uz; // Particle normalized momentum
   float w;          // Particle weight (number of physical particles)
+#ifdef ENABLE_PARTICLE_TAG
   int64_t tag, tag2;// 8b for partcile ID (plus 8b for padding)
+#endif
 } particle_t;
 
 // WARNING: FUNCTIONS THAT USE A PARTICLE_MOVER ASSUME THAT EVERYBODY

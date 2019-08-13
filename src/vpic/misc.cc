@@ -82,7 +82,9 @@ vpic_simulation::inject_particle( species_t * sp,
   p->uy = (float)uy;
   p->uz = (float)uz;
   p->w  = w;
+#ifdef ENABLE_PARTICLE_TAG
   p->tag = tag;
+#endif
 
   if( update_rhob ) accumulate_rhob( field_array->f, p, grid, -sp->q );
 

@@ -85,6 +85,7 @@ option(DISABLE_DYNAMIC_RESIZING "Prevent particle arrays from dynamically resizi
 # option to set minimum number of particles
 set(SET_MIN_NUM_PARTICLES AUTO CACHE STRING "Select minimum number of particles to use, if using dynamic particle array resizing")
 
+option(ENABLE_PARTICLE_TAG "Add tag field to particle structure" OFF)
 
 #------------------------------------------------------------------------------#
 # Create include and link aggregates
@@ -284,6 +285,11 @@ if(VPIC_PRINT_MORE_DIGITS)
   add_definitions(-DVPIC_PRINT_MORE_DIGITS)
   set(VPIC_CXX_FLAGS "${VPIC_CXX_FLAGS} -DVPIC_PRINT_MORE_DIGITS")
 endif(VPIC_PRINT_MORE_DIGITS)
+
+if(ENABLE_PARTICLE_TAG)
+  add_definitions(-DENABLE_PARTICLE_TAG)
+  set(VPIC_CXX_FLAGS "${VPIC_CXX_FLAGS} -DENABLE_PARTICLE_TAG")
+endif(ENABLE_PARTICLE_TAG)
 
 #------------------------------------------------------------------------------#
 # Handle vpic compile script last.
