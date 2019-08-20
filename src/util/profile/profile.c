@@ -20,7 +20,7 @@ update_profile( int dump ) {
     sum_total  += p->t_total;
   }
 
-  if( dump )
+  if( VERBOSE_MESSAGES != 0 && dump )
   {
     #if defined(VPIC_PRINT_MORE_DIGITS)
     log_printf( "\n" // 8901234567890123456 | xxx% x.xxxe+xx x.xe+xx x.xxxe+xx | xxx% x.xxxe+xx x.xe+xx x.xxxe+xx 
