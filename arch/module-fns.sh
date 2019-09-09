@@ -136,9 +136,9 @@ fi
 #
 # heuristic to choose a CPU target
 #
-if [ x${craype_haswell} != x ]; then
+if [ x${mod_craype_haswell} != x ]; then
     VCPU="haswell"
-elif [ x${craype_mic_knl} != x ]; then
+elif [ x${mod_craype_mic_knl} != x ]; then
     VCPU="knl"
 else
     VCPU="broadwell"      # XXX best guess
